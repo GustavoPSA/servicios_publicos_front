@@ -1,0 +1,38 @@
+<div class="mt-5 w-75 mx-auto">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Serial</th>
+                <th scope="col">Número Interno</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Fecha Compra</th>
+                <th scope="col">Fecha Venta</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Ciudades</th>            
+                <th scope="col">Acciones</th>   
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let material of materiales">
+                <td>{{material.idMaterial}}</td>
+                <td>{{material.nombre}}</td>
+                <td>{{material.descripcion}}</td>
+                <td>{{material.tipo}}</td>
+                <td>{{material.serial}}</td>
+                <td>{{material.numeroInterno}}</td>
+                <td>{{material.precio}}</td>
+                <td>{{material.fechaCompra | date:'yyyy-MM-dd'}}</td>
+                <td>{{material.fechaVenta | date:'yyyy-MM-dd'}}</td>
+                <td>{{material.estado.desEstado}}</td>
+                <td> <span *ngFor="let item of material.ciudades">{{item.desCiudad}}<br></span><br> </td>         
+                <td>
+                    <button class="btn btn-secondary" routerLink="/editar/{{material.idMaterial}}"><i class="fa-solid fa-square-pen"></i> Editar</button>
+                </td>  
+            </tr>
+        </tbody>
+    </table>
+</div>

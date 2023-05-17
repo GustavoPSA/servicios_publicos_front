@@ -1,7 +1,7 @@
 export class Estado {
 
     idEstado?: number;
-	desEstado: string;
+	desEstado?: string;
 
     constructor(desEstado?: string) {
 

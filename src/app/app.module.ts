@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 //External
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+
 import { ListaMaterialComponent } from './material/listar/lista-material.component';
 import { GuardarMaterialComponent } from './material/guardar/guardar-material.component';
 
@@ -23,7 +26,9 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule, 
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(),    
+    CalendarModule,
+    MultiSelectModule,
     HttpClientModule,
     FormsModule
   ],

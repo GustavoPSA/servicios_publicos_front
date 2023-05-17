@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { debug } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Ciudad } from 'src/app/models/ciudad';
 import { Estado } from 'src/app/models/estado';
 import { Material } from 'src/app/models/material';
+import { CiudadService } from 'src/app/service/ciudad.service';
+import { EstadoService } from 'src/app/service/estado.service';
 import { MaterialService } from 'src/app/service/material.service';
 
 @Component({
@@ -22,19 +25,28 @@ export class GuardarMaterialComponent implements OnInit {
 	precio: number = 0;
 	fechaCompra: Date = new Date;
 	fechaVenta: Date = new Date;
-	estado: Estado = new Estado();
+	estadoId: number = 0;
+  estado: Estado = new Estado();
 	ciudades: Ciudad[] = [];
+
+  listEstados: Estado[] = [];
+  listCiudades: Ciudad[] = [];
 
   constructor(
       private materialService: MaterialService,
+      private ciudadService: CiudadService,
+      private estadoService: EstadoService,
       private toastr: ToastrService,
       private router: Router
     ) { }
 
   ngOnInit(): void {
+    this.cargarEstados();
+    this.cargarCiudades();
   }
 
   onCreate (): void {
+    debugger
     const material = new Material(this.nombre,
       this.descripcion,
       this.tipo,
@@ -43,7 +55,7 @@ export class GuardarMaterialComponent implements OnInit {
       this.precio,
       this.fechaCompra,
       this.fechaVenta,
-      this.estado,
+      this.estado = {idEstado: this.estadoId},
       this.ciudades);
 
     this.materialService.add(material).subscribe(
@@ -59,6 +71,34 @@ export class GuardarMaterialComponent implements OnInit {
         });
       }
     );
+  }
+
+  cargarEstados(): void {
+    this.estadoService.list().subscribe(
+      data => {
+
+        this.listEstados = data;
+      },
+      err => {
+        console.log(err);
+      }
+
+    )
+
+  }
+
+  cargarCiudades(): void {
+    this.ciudadService.list().subscribe(
+      data => {
+
+        this.listCiudades = data;
+      },
+      err => {
+        console.log(err);
+      }
+
+    )
+
   }
 
 }

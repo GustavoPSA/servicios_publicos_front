@@ -8,7 +8,7 @@ import { Material } from '../models/material';
 })
 export class MaterialService {
 
-  materialURL = 'http://localhost:8080/servicios-publicos/materiales';
+  materialURL = 'http://localhost:8080/servicios-publicos/material';
 
   constructor(private httpClient: HttpClient) { }
 

@@ -1,5 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { debug } from 'console';
 import { ToastrService } from 'ngx-toastr';
 import { Ciudad } from 'src/app/models/ciudad';
@@ -15,27 +16,20 @@ import { MaterialService } from 'src/app/service/material.service';
   styleUrls: ['./guardar-material.component.css']
 })
 export class GuardarMaterialComponent implements OnInit {
-
-  idMaterial: number = 0;
-	nombre: string = '';
-	descripcion: string = '';
-	tipo: string = '';
-	serial: string = '';
-	numeroInterno: string = '';
-	precio: number = 0;
-	fechaCompra: Date = new Date;
-	fechaVenta: Date = new Date;
+  
+  idMaterialEdit: number = 0;
 	estadoId: number = 0;
-  estado: Estado = new Estado();
+  estado: Estado = new Estado(0);
 	ciudades: Ciudad[] = [];
-
   listEstados: Estado[] = [];
   listCiudades: Ciudad[] = [];
+  material: Material = new Material ('','','','','',0,new Date,new Date,this.estado,this.ciudades);
 
   constructor(
       private materialService: MaterialService,
       private ciudadService: CiudadService,
       private estadoService: EstadoService,
+      private activatedRoute: ActivatedRoute,
       private toastr: ToastrService,
       private router: Router
     ) { }
@@ -43,34 +37,45 @@ export class GuardarMaterialComponent implements OnInit {
   ngOnInit(): void {
     this.cargarEstados();
     this.cargarCiudades();
+    this.cargarMaterial();
   }
 
   onCreate (): void {
-    debugger
-    const material = new Material(this.nombre,
-      this.descripcion,
-      this.tipo,
-      this.serial,
-      this.numeroInterno,
-      this.precio,
-      this.fechaCompra,
-      this.fechaVenta,
-      this.estado = {idEstado: this.estadoId},
-      this.ciudades);
+        
+    this.material.estado = {idEstado: this.estadoId};
 
-    this.materialService.add(material).subscribe(
-      data => {
-        this.toastr.success('Material Creado', 'Exitosamente', {
-          timeOut: 3000,
-        });
-        this.router.navigate(['/']);
-      },
-      err => {
-        this.toastr.error(err.error.message, 'Error', {
-          timeOut: 3000,
-        });
-      }
-    );
+    if (this.idMaterialEdit != null) {
+      this.material.idMaterial = this.idMaterialEdit;      
+      this.materialService.edit(this.material).subscribe(
+        data => {
+          this.toastr.success('Material Modificado', 'Exitosamente', {
+            timeOut: 3000,
+          });
+          this.router.navigate(['/']);
+        },
+        err => {
+          this.toastr.error(err.error.message, 'Error', {
+            timeOut: 3000,
+          });
+        }
+      );
+    }
+    else{
+      this.materialService.add(this.material).subscribe(
+        data => {
+          this.toastr.success('Material Creado', 'Exitosamente', {
+            timeOut: 3000,
+          });
+          this.router.navigate(['/']);
+        },
+        err => {
+          this.toastr.error(err.error.message, 'Error', {
+            timeOut: 3000,
+          });
+        }
+      );
+    }
+    
   }
 
   cargarEstados(): void {
@@ -80,11 +85,11 @@ export class GuardarMaterialComponent implements OnInit {
         this.listEstados = data;
       },
       err => {
-        console.log(err);
+        this.toastr.error(err.error.message, 'Error', {
+          timeOut: 3000,
+        });
       }
-
-    )
-
+    );
   }
 
   cargarCiudades(): void {
@@ -94,11 +99,31 @@ export class GuardarMaterialComponent implements OnInit {
         this.listCiudades = data;
       },
       err => {
-        console.log(err);
+        this.toastr.error(err.error.message, 'Error', {
+          timeOut: 3000,
+        });
       }
+    );
+  }
 
-    )
-
+  cargarMaterial(): void {
+    
+    this.idMaterialEdit = this.activatedRoute.snapshot.params['idMaterial'];
+    if (this.idMaterialEdit != null){
+      this.materialService.getById(this.idMaterialEdit).subscribe(
+        data => {                    
+          this.material = data;
+          this.material.fechaCompra = new Date(data.fechaCompra);
+          this.material.fechaVenta = new Date(data.fechaVenta);
+          this.estadoId = this.material.estado.idEstado;
+        },
+        err => {
+          this.toastr.error(err.error.message, 'Error', {
+            timeOut: 3000,
+          });
+        }  
+      );
+    }    
   }
 
 }

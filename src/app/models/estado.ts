@@ -1,10 +1,11 @@
 export class Estado {
 
-    idEstado?: number;
+    idEstado: number;
 	desEstado?: string;
 
-    constructor(desEstado?: string) {
+    constructor(idEstado: number, desEstado?: string) {
 
-        this.desEstado = desEstado || '';;
+        this.idEstado = idEstado;
+        this.desEstado = desEstado || '';
     }
 }

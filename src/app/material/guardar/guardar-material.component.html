@@ -4,38 +4,38 @@
             <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="nombre" required />
+                    <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="material.nombre" required />
                 </div>
                 <div class="form-group">
                     <label for="descripcion">Descripción</label>
-                    <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="descripcion" required />
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="material.descripcion" required />
                 </div>
                 <div class="form-group">
                     <label for="tipo">Tipo</label>
-                    <input type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="tipo" required />
+                    <input type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="material.tipo" required />
                 </div>
                 <div class="form-group">
                     <label for="serial">Serial</label>
-                    <input type="text" class="form-control" id="serial" name="serial" [(ngModel)]="serial" required />
+                    <input type="text" class="form-control" id="serial" name="serial" [(ngModel)]="material.serial" required />
                 </div>
                 <div class="form-group">
                     <label for="numeroInterno">Número Interno</label>
-                    <input type="text" class="form-control" id="numeroInterno" name="numeroInterno" [(ngModel)]="numeroInterno" required />
+                    <input type="text" class="form-control" id="numeroInterno" name="numeroInterno" [(ngModel)]="material.numeroInterno" required />
                 </div>
                 <div class="form-group">
                     <label for="precio">Precio</label>
-                    <input type="number" class="form-control" id="precio" name="precio" [(ngModel)]="precio" required />
+                    <input type="number" class="form-control" id="precio" name="precio" [(ngModel)]="material.precio" required />
                 </div>
                 <div class="form-group">
                     <label for="fechaCompra">Fecha Compra </label>
                     <div>
-                        <p-calendar class="custom-calendar" id="fechaCompra" name="fechaCompra" [(ngModel)]="fechaCompra" [showIcon]="true"></p-calendar>
+                        <p-calendar class="custom-calendar" id="fechaCompra" name="fechaCompra" [(ngModel)]="material.fechaCompra" [showIcon]="true"></p-calendar>
                     </div>                    
                 </div>
                 <div class="form-group">
                     <label for="fechaVenta">Fecha Venta</label>
                     <div>
-                        <p-calendar id="fechaVenta" name="fechaVenta" [(ngModel)]="fechaVenta" [showIcon]="true"></p-calendar>
+                        <p-calendar id="fechaVenta" name="fechaVenta" [(ngModel)]="material.fechaVenta" [showIcon]="true"></p-calendar>
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <label for="ciudades">Ciudades</label>
                     <div>
-                        <p-multiSelect [options]="listCiudades"  optionLabel="desCiudad" [filter]="true"  defaultLabel="Seleccione una ciudad"   id="ciudades" name="ciudades" [(ngModel)]="ciudades"></p-multiSelect>
+                        <p-multiSelect [options]="listCiudades"  optionLabel="desCiudad" [filter]="true"  defaultLabel="Seleccione una ciudad"   id="ciudades" name="ciudades" [(ngModel)]="material.ciudades"></p-multiSelect>
                     </div>
                 </div>
                 <button class="btn btn-success btn-block mt-3" [disabled]="!f.valid" > Guardar</button>
